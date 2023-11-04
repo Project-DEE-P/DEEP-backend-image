@@ -15,8 +15,8 @@ import (
 func Route(app *fiber.App) {
 	app.Post("/api/images/image", middleware.Authenticate, CreateImage)
 	app.Get("/api/images/:ident", SelectImgae)
-	app.Put("/api/images/:ident", UpdateImage)
-	app.Delete("/api/images/:ident", DeleteImage)
+	app.Put("/api/images/:ident", middleware.Authenticate, UpdateImage)
+	app.Delete("/api/images/:ident", middleware.Authenticate, DeleteImage)
 }
 
 func CreateImage(c *fiber.Ctx) error {
@@ -44,8 +44,8 @@ func CreateImage(c *fiber.Ctx) error {
 func SelectImgae(c *fiber.Ctx) error {
 	clientRequest := new(model.InSelectImage).ParseX(c)
 
-	file := database.Get().SelectImageX(c.Context(), uuid.Must(uuid.Parse(clientRequest.Ident))).Instance
-	return c.Status(fiber.StatusOK).Send(file)
+	fileBytes := database.Get().SelectImageX(c.Context(), uuid.Must(uuid.Parse(clientRequest.Ident))).Instance
+	return c.Status(fiber.StatusOK).Send(fileBytes)
 }
 
 func UpdateImage(c *fiber.Ctx) error {

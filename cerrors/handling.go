@@ -30,9 +30,17 @@ func NewErrorHandler() func(*fiber.Ctx, error) error {
 		}
 
 		if _, isParsingErr := err.(parsingErr); isParsingErr {
-			c.Status(fiber.StatusBadRequest).JSON(generalResponse{
+			return c.Status(fiber.StatusBadRequest).JSON(generalResponse{
 				Status:  fiber.StatusBadRequest,
 				Message: "Parsing error",
+				Data:    err.Error(),
+			})
+		}
+
+		if _, isAuthorizationErr := err.(authorizationErr); isAuthorizationErr {
+			return c.Status(fiber.StatusUnauthorized).JSON(generalResponse{
+				Status:  fiber.StatusUnauthorized,
+				Message: "UnAuthorized",
 				Data:    err.Error(),
 			})
 		}

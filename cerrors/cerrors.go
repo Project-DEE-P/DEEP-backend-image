@@ -8,6 +8,10 @@ type (
 	parsingErr struct {
 		errMessage string
 	}
+
+	authorizationErr struct {
+		errMessage string
+	}
 )
 
 func (v validationErr) Error() string {
@@ -24,4 +28,12 @@ func (p parsingErr) Error() string {
 
 func ParsingErr(errMessage string) {
 	panic(parsingErr{errMessage: errMessage})
+}
+
+func (a authorizationErr) Error() string {
+	return a.errMessage
+}
+
+func AuthorizationErr(errMessage string) {
+	panic(authorizationErr{errMessage: errMessage})
 }
