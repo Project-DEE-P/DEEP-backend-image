@@ -1,4 +1,4 @@
-package conteoller
+package controller
 
 import (
 	"DEEP-backend-image/cerrors"

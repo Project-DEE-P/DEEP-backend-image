@@ -15,7 +15,17 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	loadEnvConfiguration()
+	initailizeDatabse()
+}
+func loadEnvConfiguration(filenames ...string) {
+	err := godotenv.Load(filenames...)
+	cerrors.Sniff(err)
+}
 
 // initilzeDatabase는 database를 초기화 하는 함수 입니다.
 // 이 함수를 호출하면 자동적으로 instance에 초기화된 데이터베이스가 삽입됩니다.
@@ -48,7 +58,8 @@ func initailizeDatabse() {
 	}
 
 	// load instance
-	*instance = clientWrap(*client)
+	temp := (clientWrap(*client))
+	instance = &temp
 }
 
 type (
