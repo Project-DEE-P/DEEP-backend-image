@@ -8,6 +8,7 @@ import (
 	"io"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func Route(app *fiber.App) {
@@ -38,8 +39,9 @@ func CreateImage(c *fiber.Ctx) error {
 	})
 }
 
-// func SelectImgae(c *fiber.Ctx) error {
-// 	clientRequest := new(model.InImageSelect).ParseX(c)
+func SelectImgae(c *fiber.Ctx) error {
+	clientRequest := new(model.InImageSelect).ParseX(c)
 
-// 	return c.Status(fiber.StatusOK).Send(database.Get().)
-// }
+	file := database.Get().SelectImageX(c.Context(), uuid.Must(uuid.Parse(clientRequest.Ident))).Instance
+	return c.Status(fiber.StatusOK).Send(file)
+}

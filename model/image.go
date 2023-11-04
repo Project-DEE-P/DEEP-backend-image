@@ -3,7 +3,6 @@ package model
 import (
 	"DEEP-backend-image/cerrors"
 	"mime/multipart"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -23,7 +22,7 @@ type (
 
 	InImageSelect struct {
 		// path/value
-		Ident int `validate:"requried"`
+		Ident string `validate:"requried"`
 	}
 )
 
@@ -43,12 +42,9 @@ func (i *InImageCreate) ParseX(c *fiber.Ctx) *InImageCreate {
 }
 
 func (i *InImageSelect) ParseX(c *fiber.Ctx) *InImageSelect {
-	var err error
 
 	// parsing Image
-	if i.Ident, err = strconv.Atoi(c.Params("ident")); err != nil {
-		cerrors.ParsingErr(err.Error())
-	}
+	i.Ident = c.Params("ident")
 
 	// validate
 	validate(i)

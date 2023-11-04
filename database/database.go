@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/google/uuid"
 )
 
 // initilzeDatabase는 database를 초기화 하는 함수 입니다.
@@ -88,8 +89,9 @@ func (c *clientWrap) CreateImageX(ctx context.Context, file []byte) *ent.Image {
 		SaveX(ctx)
 }
 
-func (c *clientWrap) Select(ctx context.Context) {
-
+func (c *clientWrap) SelectImageX(ctx context.Context, ID uuid.UUID) *ent.Image {
+	return c.Image.
+		GetX(ctx, ID)
 }
 
 func (c *clientWrap) Update(ctx context.Context) {
