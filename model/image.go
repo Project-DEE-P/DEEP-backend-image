@@ -12,7 +12,7 @@ import (
 type (
 	// InImageCreate 구조체는 /api/images/image를 호출했을 때 사용되는 모델입니다.
 	InImageCreate struct {
-		Image *multipart.FileHeader `form:"image" validate:"image"`
+		Image *multipart.FileHeader `form:"image" validate:"image,requried"`
 	}
 
 	// OutImageCreate 구조체는 /api/images/image를 호출의 응답의 사용되는 모델입니다.
@@ -23,6 +23,11 @@ type (
 	InImageSelect struct {
 		// path/value
 		Ident string `validate:"requried"`
+	}
+
+	InImageUpdate struct {
+		Ident string                `validate:"required"`
+		Image *multipart.FileHeader `form:"image" validate:"image,required"`
 	}
 )
 
@@ -52,4 +57,19 @@ func (i *InImageSelect) ParseX(c *fiber.Ctx) *InImageSelect {
 	// retunn
 	return i
 
+}
+
+func (i *InImageUpdate) ParseX(c *fiber.Ctx) *InImageUpdate {
+	var err error
+
+	// parsing Image
+	if i.Image, err = c.FormFile("image"); err != nil {
+		cerrors.ParsingErr(err.Error())
+	}
+
+	// 필드 유효성 검사
+	validate(i)
+
+	// 반환
+	return i
 }
