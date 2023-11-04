@@ -28,6 +28,7 @@ func CreateImage(c *fiber.Ctx) error {
 	defer fileContent.Close()
 
 	fileBytes, err := io.ReadAll(fileContent)
+	cerrors.Sniff(err)
 
 	// response 해주기
 	return c.Status(fiber.StatusCreated).JSON(model.OutGeneral{
@@ -45,3 +46,18 @@ func SelectImgae(c *fiber.Ctx) error {
 	file := database.Get().SelectImageX(c.Context(), uuid.Must(uuid.Parse(clientRequest.Ident))).Instance
 	return c.Status(fiber.StatusOK).Send(file)
 }
+
+// func UpdateImage(c *fiber.Ctx) error {
+// 	// parsing
+// 	clientRequest := new(model.InImageUpdate).ParseX(c)
+
+// 	// multipart/form-data로 넘어온 image를 bytes로 변환
+// 	fileContent, err := clientRequest.Image.Open()
+// 	cerrors.Sniff(err)
+
+// 	fileBytes, err := io.ReadAll(fileContent)
+
+// 	// call udpate repository
+
+// 	// response
+// }
