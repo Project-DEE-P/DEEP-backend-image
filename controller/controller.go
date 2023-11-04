@@ -16,12 +16,12 @@ func Route(app *fiber.App) {
 	app.Post("/api/images/image", middleware.Authenticate, CreateImage)
 	app.Get("/api/images/:ident", SelectImgae)
 	app.Put("/api/images/:ident", UpdateImage)
-	app.Delete("/api/images/:ident")
+	app.Delete("/api/images/:ident", DeleteImage)
 }
 
 func CreateImage(c *fiber.Ctx) error {
 	// client reqeust parsing
-	clientRequest := new(model.InImageCreate).ParseX(c)
+	clientRequest := new(model.InCreateImage).ParseX(c)
 
 	// multipart/form-data로 넘어온 image를 bytes로 변환
 	fileContent, err := clientRequest.Image.Open()
@@ -35,14 +35,14 @@ func CreateImage(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(model.OutGeneral{
 		Status:  fiber.StatusCreated,
 		Message: "Success Created",
-		Data: model.OutImageCreate{
+		Data: model.OutCreateImage{
 			Ident: database.Get().CreateImageX(c.Context(), fileBytes).ID.String(),
 		},
 	})
 }
 
 func SelectImgae(c *fiber.Ctx) error {
-	clientRequest := new(model.InImageSelect).ParseX(c)
+	clientRequest := new(model.InSelectImage).ParseX(c)
 
 	file := database.Get().SelectImageX(c.Context(), uuid.Must(uuid.Parse(clientRequest.Ident))).Instance
 	return c.Status(fiber.StatusOK).Send(file)
@@ -50,7 +50,7 @@ func SelectImgae(c *fiber.Ctx) error {
 
 func UpdateImage(c *fiber.Ctx) error {
 	// parsing
-	clientRequest := new(model.InImageUpdate).ParseX(c)
+	clientRequest := new(model.InUpdateImage).ParseX(c)
 
 	// multipart/form-data로 넘어온 image를 bytes로 변환
 	fileContent, err := clientRequest.Image.Open()
@@ -73,4 +73,8 @@ func UpdateImage(c *fiber.Ctx) error {
 		Message: "Success Updated",
 		Data:    nil,
 	})
+}
+
+func DeleteImage(c *fiber.Ctx) error {
+
 }
