@@ -79,3 +79,14 @@ func (i *InUpdateImage) ParseX(c *fiber.Ctx) *InUpdateImage {
 	// 반환
 	return i
 }
+
+func (i *InDeleteImage) ParseX(c *fiber.Ctx) *InDeleteImage {
+
+	// parsing
+	i.Ident = c.Params("ident")
+
+	// validate
+	validate(i)
+
+	return i
+}

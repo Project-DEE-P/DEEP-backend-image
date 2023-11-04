@@ -100,6 +100,7 @@ func (c *clientWrap) UpdateImageX(ctx context.Context, image *ent.Image) {
 		SaveX(ctx)
 }
 
-func (c *clientWrap) Delete(ctx context.Context) {
-
+func (c *clientWrap) DeleteImageX(ctx context.Context, ID uuid.UUID) {
+	c.Image.DeleteOneID(ID).
+		ExecX(ctx)
 }

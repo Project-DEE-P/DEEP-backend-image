@@ -76,5 +76,14 @@ func UpdateImage(c *fiber.Ctx) error {
 }
 
 func DeleteImage(c *fiber.Ctx) error {
+	clientRequest := new(model.InDeleteImage).ParseX(c)
 
+	id := uuid.Must(uuid.Parse(clientRequest.Ident))
+	database.Get().DeleteImageX(c.Context(), id)
+
+	return c.Status(fiber.StatusOK).JSON(model.OutGeneral{
+		Status:  fiber.StatusOK,
+		Message: "Success Delete",
+		Data:    nil,
+	})
 }
