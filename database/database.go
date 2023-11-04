@@ -94,8 +94,10 @@ func (c *clientWrap) SelectImageX(ctx context.Context, ID uuid.UUID) *ent.Image 
 		GetX(ctx, ID)
 }
 
-func (c *clientWrap) Update(ctx context.Context) {
-
+func (c *clientWrap) UpdateImageX(ctx context.Context, image *ent.Image) {
+	c.Image.UpdateOneID(image.ID).
+		SetInstance(image.Instance).
+		SaveX(ctx)
 }
 
 func (c *clientWrap) Delete(ctx context.Context) {
