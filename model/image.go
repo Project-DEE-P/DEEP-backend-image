@@ -11,27 +11,31 @@ import (
 // Out 접미사는 client에게 반환하는 모델임을 뜻합니다.
 type (
 	// InImageCreate 구조체는 /api/images/image를 호출했을 때 사용되는 모델입니다.
-	InImageCreate struct {
+	InCreateImage struct {
 		Image *multipart.FileHeader `form:"image" validate:"image,required"`
 	}
 
 	// OutImageCreate 구조체는 /api/images/image를 호출의 응답의 사용되는 모델입니다.
-	OutImageCreate struct {
+	OutCreateImage struct {
 		Ident string `json:"ident"`
 	}
 
-	InImageSelect struct {
+	InSelectImage struct {
 		// path/value
 		Ident string `validate:"required"`
 	}
 
-	InImageUpdate struct {
+	InUpdateImage struct {
 		Ident string                `validate:"required"`
 		Image *multipart.FileHeader `form:"image" validate:"image,required"`
 	}
+
+	InDeleteImage struct {
+		Ident string `validate:"required"`
+	}
 )
 
-func (i *InImageCreate) ParseX(c *fiber.Ctx) *InImageCreate {
+func (i *InCreateImage) ParseX(c *fiber.Ctx) *InCreateImage {
 	var err error
 
 	// parsing Image
@@ -46,7 +50,7 @@ func (i *InImageCreate) ParseX(c *fiber.Ctx) *InImageCreate {
 	return i
 }
 
-func (i *InImageSelect) ParseX(c *fiber.Ctx) *InImageSelect {
+func (i *InSelectImage) ParseX(c *fiber.Ctx) *InSelectImage {
 
 	// parsing Image
 	i.Ident = c.Params("ident")
@@ -59,7 +63,7 @@ func (i *InImageSelect) ParseX(c *fiber.Ctx) *InImageSelect {
 
 }
 
-func (i *InImageUpdate) ParseX(c *fiber.Ctx) *InImageUpdate {
+func (i *InUpdateImage) ParseX(c *fiber.Ctx) *InUpdateImage {
 	var err error
 
 	// parsing Image
