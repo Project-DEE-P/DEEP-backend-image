@@ -13,7 +13,7 @@ import (
 
 func Route(app *fiber.App) {
 	app.Post("/api/images/image", middleware.Authenticate, CreateImage)
-	app.Get("/api/images/:ident")
+	app.Get("/api/images/:ident", SelectImgae)
 	app.Put("/api/images/:ident")
 	app.Delete("/api/images/:ident")
 }
