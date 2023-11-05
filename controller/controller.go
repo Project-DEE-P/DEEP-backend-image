@@ -13,10 +13,12 @@ import (
 )
 
 func Route(app *fiber.App) {
-	app.Post("/api/images/image", middleware.Authenticate, CreateImage)
-	app.Get("/api/images/:ident", SelectImgae)
-	app.Put("/api/images/:ident", middleware.Authenticate, UpdateImage)
-	app.Delete("/api/images/:ident", middleware.Authenticate, DeleteImage)
+	v1 := app.Group("v1")
+
+	v1.Post("/api/images/image", middleware.Authenticate, CreateImage)
+	v1.Get("/api/images/:ident", SelectImgae)
+	v1.Put("/api/images/:ident", middleware.Authenticate, UpdateImage)
+	v1.Delete("/api/images/:ident", middleware.Authenticate, DeleteImage)
 }
 
 func CreateImage(c *fiber.Ctx) error {
