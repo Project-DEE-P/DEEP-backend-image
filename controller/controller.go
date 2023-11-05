@@ -85,7 +85,7 @@ func DeleteImage(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(model.OutGeneral{
 		Status:  fiber.StatusOK,
-		Message: "Success Delete",
+		Message: "Success Deleted",
 		Data:    nil,
 	})
 }

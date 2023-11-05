@@ -13,7 +13,7 @@ import (
 // v(validate)는 이미지 검증을 당담하는 변수 입니다.
 var v *validator.Validate
 
-var allowExtentions = []string{".jpeg", ".jpg", ".png", ".mov"}
+var allowExtentions = []string{".jpeg", ".jpg", ".png", ".mov", ".svg"}
 
 func init() {
 	v = validator.New()

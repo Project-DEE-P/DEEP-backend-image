@@ -9,12 +9,12 @@ import (
 
 func Authenticate(c *fiber.Ctx) error {
 	// header에서 token 추출
-	token := c.Get("Authorization")
+	token := c.Get("ACCESS-KEY")
 
 	if token == "" {
-		cerrors.AuthorizationErr("당신은 접근 키를 소지하고 않고 있습니다.")
+		cerrors.AuthorizationErr("당신은 ACCESS-KEY를 소지하고 않고 있습니다.")
 	} else if token != os.Getenv("ASSIGN_KEY") {
-		cerrors.AuthorizationErr("당신은 잘못된 접근 키를 소지하고 있습니다.")
+		cerrors.AuthorizationErr("당신은 유효하지 못한 ACCESS-KEY를 소지하고 있습니다.")
 	}
 
 	return c.Next()
