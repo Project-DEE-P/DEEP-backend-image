@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"DEEP-backend-image/cerrors"
+	"fmt"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,6 +11,8 @@ import (
 func Authenticate(c *fiber.Ctx) error {
 	// header에서 token 추출
 	token := c.Get("ACCESS-KEY")
+
+	fmt.Println("ACCESS-KEY: ", token)
 
 	if token == "" {
 		cerrors.AuthorizationErr("당신은 ACCESS-KEY를 소지하고 않고 있습니다.")
