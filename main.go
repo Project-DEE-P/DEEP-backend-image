@@ -4,6 +4,7 @@ import (
 	"DEEP-backend-image/cerrors"
 	"DEEP-backend-image/controller"
 	"flag"
+	"log"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -29,5 +30,5 @@ func main() {
 	controller.Route(app)
 
 	// 데이터베이스 테이블 ㅅ생성 확인
-	app.Listen(port)
+	log.Fatal(app.Listen(port))
 }

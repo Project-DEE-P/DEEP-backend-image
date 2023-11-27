@@ -13,7 +13,7 @@ func Authenticate(c *fiber.Ctx) error {
 
 	if token == "" {
 		cerrors.AuthorizationErr("당신은 ACCESS-KEY를 소지하고 않고 있습니다.")
-	} else if token != os.Getenv("ASSIGN_KEY") {
+	} else if token != os.Getenv("ACCESS-KEY") {
 		cerrors.AuthorizationErr("당신은 유효하지 못한 ACCESS-KEY를 소지하고 있습니다.")
 	}
 
