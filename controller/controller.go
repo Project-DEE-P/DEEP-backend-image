@@ -4,7 +4,6 @@ import (
 	"DEEP-backend-image/cerrors"
 	"DEEP-backend-image/database"
 	"DEEP-backend-image/database/ent"
-	"DEEP-backend-image/middleware"
 	"DEEP-backend-image/model"
 	"io"
 
@@ -15,10 +14,10 @@ import (
 func Route(app *fiber.App) {
 	v1 := app.Group("v1")
 
-	v1.Post("/api/images/image", middleware.Authenticate, CreateImage)
+	v1.Post("/api/images/image", CreateImage)
 	v1.Get("/api/images/:ident", SelectImgae)
-	v1.Put("/api/images/:ident", middleware.Authenticate, UpdateImage)
-	v1.Delete("/api/images/:ident", middleware.Authenticate, DeleteImage)
+	v1.Put("/api/images/:ident", UpdateImage)
+	v1.Delete("/api/images/:ident", DeleteImage)
 }
 
 func CreateImage(c *fiber.Ctx) error {
